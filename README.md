@@ -58,7 +58,7 @@ fun fromKotlinObject(obj: Any?): JsonValue
 - Uso de ```kotlin kotlin.reflect.full.memberProperties``` para analisar ```kotlin data class```
 - Testes para todos os tipos inferidos
 
-## Serialização JSON
+#### Serialização JSON
 ```kotlin
 val json = JsonObject(
     mapOf(
@@ -72,15 +72,15 @@ println(json.toJsonString())
 // {"name":"Ana","age":25,"active":true}
 ```
 
-## 🔄 Operações funcionais
-### JsonArray.map
+#### 🔄 Operações funcionais
+##### JsonArray.map
 ``` kotlin
 val array = JsonArray(listOf(JsonNumber(1), JsonNumber(2)))
 val doubled = array.map { JsonNumber((it as JsonNumber).value.toInt() * 2) }
 // Resultado: [2, 4]
 ```
 
-### JsonObject.filter
+##### JsonObject.filter
 ``` kotlin
 val obj = JsonObject(
     mapOf("a" to JsonNumber(1), "b" to JsonNumber(2))
@@ -89,7 +89,7 @@ val filtered = obj.filter { key, value -> (value as JsonNumber).value.toInt() > 
 // Resultado: {"b":2}
 ```
 
-## 🕵️ Validação com Visitor
+#### 🕵️ Validação com Visitor
 Permite percorrer a estrutura e validar:
 
 - Se todas as chaves dos objetos são válidas
@@ -101,8 +101,8 @@ json.accept(validator)
 println("JSON válido? ${validator.isValid}")
 ```
 
-## 🤖 Inference: fromKotlinObject
-### Exemplo com data class
+#### 🤖 Inference: fromKotlinObject
+##### Exemplo com data class
 ``` kotlin
 data class Person(val name: String, val age: Int)
 
@@ -112,7 +112,7 @@ val json = fromKotlinObject(person)
 println(json.toJsonString())
 // {"name":"Ana","age":30}
 ```
-### Exemplo com estrutura complexa
+##### Exemplo com estrutura complexa
 ``` kotlin
 enum class Role { ADMIN, USER }
 
@@ -127,6 +127,22 @@ val json = fromKotlinObject(data)
 println(json.toJsonString())
 // {"user":{"name":"Ana","age":30},"roles":["ADMIN","USER"],"active":true}
 ```
+### 📌 Fase 3 - Microframework
+Microframework HTTP leve, desenvolvido em Kotlin, que permite o tratamento de pedidos GET com serialização automática em JSON — sem dependências externas como o Spring Boot.
+
+#### 🚀 Funcionalidades
+
+- Definição simples e declarativa de endpoints
+- Suporte para pedidos HTTP do tipo GET
+- Respostas em JSON diretamente a partir de classes de dados Kotlin
+- Projeto autónomo, utilizando apenas bibliotecas padrão
+
+#### ▶️ Como Executar
+
+Para correr o projeto localmente:
+- Correr script MainApi.kt
+Isto irá iniciar o servidor numa porta pré-definida (por exemplo, http://localhost:8080) — consulta o ficheiro MainApi.kt para confirmar qual a porta usada.
+
 
 ## 🧪 Testes
 - Cobrem todos os tipos JSON e funcionalidades (filter, map, toJsonString)
